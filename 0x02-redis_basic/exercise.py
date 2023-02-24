@@ -3,6 +3,8 @@
 """Writing strings to redis
 """
 import redis
+import uuid
+from typing import Union
 
 
 class Cache:
@@ -13,10 +15,12 @@ class Cache:
         """Constructor
         """
         self._redis = redis.Redis()
-        self._redis.flushdb()
+        self._redis.flushdb(True)
 
-    def store(self, data):
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """Takes a data argument and returns a string
         """
-        self._redis.set("count", data)
-        return self._redis.get("count").decode("utf-8")
+        data_key = str(uuid.uuid4())
+        self._redis.set(data_key, data)
+        return data_key
+
