@@ -67,8 +67,12 @@ class Cache:
         self._redis.set(data_key, data)
         return data_key
 
-    def get(self, key: str, fn: Union[None, Callable] = None) -> Union[str, bytes, int, float]:
-        """Takes a string key argument and an optional callable argument named fn
+    def get(
+        self,
+        key: str,
+        fn: Union[None, Callable] = None
+    ) -> Union[str, bytes, int, float]:
+        """Retrieves value from a Redis data storage
         """
         if fn is None:
             return self._redis.get(key)
